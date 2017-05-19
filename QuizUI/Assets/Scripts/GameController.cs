@@ -18,20 +18,18 @@ public class GameController : MonoBehaviour
     [SerializeField]
     public GameObject AnswerText3;
     [SerializeField]
-    public GameObject EndCanvas;
+    public GameObject EndGameCanvas;
     [SerializeField]
-    public GameObject EndMessage;
+    public GameObject EndGameMessage;
     [SerializeField]
-    public GameObject ScoreMessage;
+    public GameObject EndGameScoreMessage;
 
     List<Question> QuestionList = new List<Question>();
 
-    private int CorrectAnswer = 0;
-    private int QuestionNumber = 0;
+    private int CorrectAnswerId = 0;
+    private int CurrentQuestionNumber = 0;
     private int Score = 0;
 
-
-    // Use this for initialization
     void Start()
     {
         QuestionList.Add(new Question("Premierem którego kraju był Winston Churchill?", "Wielkiej Brytanii",
@@ -43,30 +41,25 @@ public class GameController : MonoBehaviour
             "Stany Zjednoczone", "Egipt", "Rosja"));
         QuestionList.Add(new Question("Który z władców nie władał Rzymem?", "Aleksander Wielki", "Neron",
             "Juliusz Cezar", "Kaligula"));
-        NextQuestion(QuestionList[QuestionNumber++]);
-    }
-
-    void Update()
-    {
-        
+        NextQuestion(QuestionList[CurrentQuestionNumber++]);
     }
 
     public void GetAnswer(int AnswerId)
     {
-        if (AnswerId == CorrectAnswer)
+        if (AnswerId == CorrectAnswerId)
         {
             Score++;
         }
-        if(QuestionNumber<QuestionList.Count) NextQuestion(QuestionList[QuestionNumber++]);
-        else EndGame();
+        if(CurrentQuestionNumber<QuestionList.Count) NextQuestion(QuestionList[CurrentQuestionNumber++]);
+        else DisplayEndGameCanvas();
     }
 
     void NextQuestion(Question q)
     {
         QuestionText.GetComponent<Text>().text = q.QuestionText;
         System.Random rnd = new System.Random();
-        CorrectAnswer = rnd.Next(0, 4);
-        switch (CorrectAnswer)
+        CorrectAnswerId = rnd.Next(0, 4);
+        switch (CorrectAnswerId)
         {
             case 0:
                 AnswerText0.GetComponent<Text>().text = q.Answers[0];
@@ -96,18 +89,18 @@ public class GameController : MonoBehaviour
 
     }
 
-    void EndGame()
+    void DisplayEndGameCanvas()
     {
-        EndCanvas.SetActive(true);
+        EndGameCanvas.SetActive(true);
         if (((float) Score / QuestionList.Count) > 0.5)
         {
-            EndMessage.GetComponent<Text>().text = "Gratulacje! Zdałeś!";
+            EndGameMessage.GetComponent<Text>().text = "Gratulacje! Zdałeś!";
         }
         else
         {
-            EndMessage.GetComponent<Text>().text = "Przykro mi! Nie zdałeś!";
+            EndGameMessage.GetComponent<Text>().text = "Przykro mi! Nie zdałeś!";
         }
-        ScoreMessage.GetComponent<Text>().text = "Twój wynik to "+ Score +"/" + QuestionList.Count;
+        EndGameScoreMessage.GetComponent<Text>().text = "Twój wynik to "+ Score +"/" + QuestionList.Count;
     }
 
     public void ReturnToMenu()
