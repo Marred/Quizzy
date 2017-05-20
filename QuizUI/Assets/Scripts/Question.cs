@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
+using System.Linq;
 public class Question
 {
     public string QuestionText { get;}
-    public string[] Answers = new string[4];
+    public Answer[] Answers;
 
     public Question(string question, string answer0, string answer1, string answer2, string answer3) {
         this.QuestionText = question;
-        this.Answers[0] = answer0;
-        this.Answers[1] = answer1;
-        this.Answers[2] = answer2;
-        this.Answers[3] = answer3;
+        this.Answers = new Answer[4] {
+            new Answer( answer0, true ),
+            new Answer( answer1 ),
+            new Answer( answer2 ),
+            new Answer( answer3 ) };
+    }
+
+    public static Answer[] shuffleAnswers( Question q )
+    {
+        System.Random rnd = new System.Random();
+        return q.Answers.OrderBy(x => rnd.Next()).ToArray();
     }
 }

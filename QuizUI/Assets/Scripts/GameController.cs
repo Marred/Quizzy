@@ -6,17 +6,10 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-
     [SerializeField]
     public GameObject QuestionText;
     [SerializeField]
-    public GameObject AnswerText0;
-    [SerializeField]
-    public GameObject AnswerText1;
-    [SerializeField]
-    public GameObject AnswerText2;
-    [SerializeField]
-    public GameObject AnswerText3;
+    public GameObject[] AnswerItems = new GameObject[4];
     [SerializeField]
     public GameObject EndGameCanvas;
     [SerializeField]
@@ -44,49 +37,37 @@ public class GameController : MonoBehaviour
         NextQuestion(QuestionList[CurrentQuestionNumber++]);
     }
 
-    public void GetAnswer(int AnswerId)
+    public void GetAnswer( GameObject clickedItem )
     {
-        if (AnswerId == CorrectAnswerId)
+        AnswerItem clickedAnswer = clickedItem.GetComponent<AnswerItem>();
+        if (clickedAnswer.answer.isCorrect())
         {
+            clickedAnswer.showAsCorrect();
             Score++;
         }
-        if(CurrentQuestionNumber<QuestionList.Count) NextQuestion(QuestionList[CurrentQuestionNumber++]);
+        else
+            clickedAnswer.showAsIncorrect();
+
+        StartCoroutine( delayAfterAnswer() );
+
+        
+    }
+
+    IEnumerator delayAfterAnswer()
+    {
+        yield return new WaitForSeconds(1);
+        if (CurrentQuestionNumber < QuestionList.Count) NextQuestion(QuestionList[CurrentQuestionNumber++]);
         else DisplayEndGameCanvas();
     }
 
     void NextQuestion(Question q)
     {
         QuestionText.GetComponent<Text>().text = q.QuestionText;
-        System.Random rnd = new System.Random();
-        CorrectAnswerId = rnd.Next(0, 4);
-        switch (CorrectAnswerId)
+        Answer[] shuffledAnswers = Question.shuffleAnswers(q);
+        for( int i = 0; i < 4; i++)
         {
-            case 0:
-                AnswerText0.GetComponent<Text>().text = q.Answers[0];
-                AnswerText1.GetComponent<Text>().text = q.Answers[1];
-                AnswerText2.GetComponent<Text>().text = q.Answers[2];
-                AnswerText3.GetComponent<Text>().text = q.Answers[3];
-                break;
-            case 1:
-                AnswerText1.GetComponent<Text>().text = q.Answers[0];
-                AnswerText0.GetComponent<Text>().text = q.Answers[1];
-                AnswerText2.GetComponent<Text>().text = q.Answers[2];
-                AnswerText3.GetComponent<Text>().text = q.Answers[3];
-                break;
-            case 2:
-                AnswerText2.GetComponent<Text>().text = q.Answers[0];
-                AnswerText1.GetComponent<Text>().text = q.Answers[1];
-                AnswerText0.GetComponent<Text>().text = q.Answers[2];
-                AnswerText3.GetComponent<Text>().text = q.Answers[3];
-                break;
-            case 3:
-                AnswerText3.GetComponent<Text>().text = q.Answers[0];
-                AnswerText1.GetComponent<Text>().text = q.Answers[1];
-                AnswerText2.GetComponent<Text>().text = q.Answers[2];
-                AnswerText0.GetComponent<Text>().text = q.Answers[3];
-                break;
+            AnswerItems[i].GetComponent<AnswerItem>().setAnswer(shuffledAnswers[i]);
         }
-
     }
 
     void DisplayEndGameCanvas()
