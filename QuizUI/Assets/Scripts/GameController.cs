@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     public GameObject EndGameScoreMessage;
 
+    private SoundController soundSource;
+
     List<Question> QuestionList = new List<Question>();
 
     private int CorrectAnswerId = 0;
@@ -25,6 +27,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        soundSource = (GameObject.Find("SoundController")).GetComponent<SoundController>();
+
         QuestionList.Add(new Question("Premierem którego kraju był Winston Churchill?", "Wielkiej Brytanii",
             "Stanów Zjednoczonych", "Australii", "Rosji"));
         QuestionList.Add(new Question("W którym roku odbyła się bitwa pod Grunwaldem?", "1410", "996", "1944", "2160"));
@@ -43,10 +47,14 @@ public class GameController : MonoBehaviour
         if (clickedAnswer.answer.isCorrect())
         {
             clickedAnswer.showAsCorrect();
+            soundSource.playCorrectSound();
             Score++;
         }
         else
+        {
+            soundSource.playIncorrectSound();
             clickedAnswer.showAsIncorrect();
+        }
 
         StartCoroutine( delayAfterAnswer() );
 

@@ -8,6 +8,7 @@ public class ButtonOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 {
     private CanvasGroup UIElement;
     private float startAlpha;
+    private SoundController soundSource;
 
     void Start()
     {
@@ -15,6 +16,7 @@ public class ButtonOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             UIElement = GetComponent<CanvasGroup>();
             startAlpha = UIElement.alpha;
+            soundSource = (GameObject.Find("SoundController")).GetComponent<SoundController>();
         }
         else
             throw new System.Exception("Dodaj component CanvasGroup do calego przycisku");
@@ -23,6 +25,7 @@ public class ButtonOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerEnter(PointerEventData eventData)
     {
         UIElement.alpha = 1;
+        soundSource.playHoverSound();
     }
 
     public void OnPointerExit(PointerEventData eventData)
