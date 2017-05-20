@@ -18,12 +18,8 @@ public class AnswerItem : MonoBehaviour
     public void setAnswer( Answer answer )
     {
         this.answer = answer;
-<<<<<<< HEAD
         this.answerTextItem.text = this.answer.getText();
-=======
         answerTextItem.text = this.answer.getText();
-
->>>>>>> cb2ad886c38dbf16aee76c03bb6470589a59f2d7
         setItemColor(defaultColor);
     }
 
