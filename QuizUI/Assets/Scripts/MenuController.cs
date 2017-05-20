@@ -33,38 +33,31 @@ public class MenuController : MonoBehaviour
     public GameObject DifficultyMenuCanvas;
     [SerializeField]
     public GameObject CategoryMenuCanvas;
+    [SerializeField]
+    public GameObject ModeMenuCanvas;
 
     public void NewGameAction()
     {
         StartCoroutine(MoveCanvasToScreen(0.001f, DifficultyMenuCanvas.GetComponent<RectTransform>()));
         StartCoroutine(MoveCanvasOutFromScreen(0.001f, CategoryMenuCanvas.GetComponent<RectTransform>()));
-        StartCoroutine(SetButtonColorBlue(NewGameButton));
-        StartCoroutine(SetButtonColorWhite(FirstDifficultyButton));
-        StartCoroutine(SetButtonColorWhite(SecondDifficultyButton));
-        StartCoroutine(SetButtonColorWhite(ThirdDifficultyButton));
+        StartCoroutine(MoveCanvasOutFromScreen(0.001f, ModeMenuCanvas.GetComponent<RectTransform>()));
+        ClearSelection(3);
+        SetButtonActive(NewGameButton);
     }
 
-    public void DifficultyAction(int buttonId)
+    public void DifficultyAction(GameObject button)
     {
         StartCoroutine(MoveCanvasToScreen(0.001f, CategoryMenuCanvas.GetComponent<RectTransform>()));
-        switch (buttonId)
-        {
-            case 0:
-                StartCoroutine(SetButtonColorBlue(FirstDifficultyButton));
-                StartCoroutine(SetButtonColorWhite(SecondDifficultyButton));
-                StartCoroutine(SetButtonColorWhite(ThirdDifficultyButton));
-                break;
-            case 1:
-                StartCoroutine(SetButtonColorWhite(FirstDifficultyButton));
-                StartCoroutine(SetButtonColorBlue(SecondDifficultyButton));
-                StartCoroutine(SetButtonColorWhite(ThirdDifficultyButton));
-                break;
-            case 2:
-                StartCoroutine(SetButtonColorWhite(FirstDifficultyButton));
-                StartCoroutine(SetButtonColorWhite(SecondDifficultyButton));
-                StartCoroutine(SetButtonColorBlue(ThirdDifficultyButton));
-                break;
-        }
+        StartCoroutine(MoveCanvasOutFromScreen(0.001f, ModeMenuCanvas.GetComponent<RectTransform>()));
+        ClearSelection(2);
+        SetButtonActive(button);
+    }
+
+    public void CategoryAction(GameObject button)
+    {
+        StartCoroutine(MoveCanvasToScreen(0.001f, ModeMenuCanvas.GetComponent<RectTransform>()));
+        ClearSelection(1);
+        SetButtonActive(button);
     }
 
     public void StartGame()
@@ -72,6 +65,27 @@ public class MenuController : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    //1: czyści CategoryCanvas, 2: czyści DifficultyCanvas, 3: czyści PrimaryCanvas
+    public void ClearSelection(byte selectionSize)
+    {
+        switch (selectionSize)
+        {
+            case 1:
+                SetButtonUnactive(FirstCategoryButton);
+                SetButtonUnactive(SecondCategoryButton);
+                SetButtonUnactive(ThirdCategoryButton);
+                break;
+            case 2:
+                SetButtonUnactive(FirstDifficultyButton);
+                SetButtonUnactive(SecondDifficultyButton);
+                SetButtonUnactive(ThirdDifficultyButton);
+                goto case 1;
+            case 3:
+                SetButtonUnactive(NewGameButton);
+                SetButtonUnactive(OptionsButton);
+                goto case 2;
+        }
+    }
 
     public IEnumerator MoveCanvasToScreen(float t, RectTransform canvas)
     {
@@ -92,16 +106,14 @@ public class MenuController : MonoBehaviour
         if (canvas.localPosition.y < 400) canvas.localPosition += Vector3.up * 1200;
     }
 
-    public IEnumerator SetButtonColorBlue(GameObject button)
+    public void SetButtonActive(GameObject button)
     {
-        button.GetComponent<Image>().color = Color.Lerp(Color.white, Color.blue, 1f);
-        yield return null;
+        button.GetComponent<Image>().color = Color.blue;
     }
 
-    public IEnumerator SetButtonColorWhite(GameObject button)
+    public void SetButtonUnactive(GameObject button)
     {
-        button.GetComponent<Image>().color = Color.Lerp(Color.blue, Color.white, 1f);
-        yield return null;
+        button.GetComponent<Image>().color = Color.white;
     }
 
 }
