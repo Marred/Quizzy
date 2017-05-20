@@ -21,6 +21,9 @@ public class SoundController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         singleSource = gameObject.AddComponent<AudioSource>();
+        ambientSource = gameObject.AddComponent<AudioSource>();
+
+        singleSource.playOnAwake = false;
         ambientSource.playOnAwake = false;
 	}
 

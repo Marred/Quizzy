@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
     [SerializeField]
     public GameObject QuestionText;
     [SerializeField]
-    public GameObject[] AnswerItems = new GameObject[4];
+    public AnswerItem[] AnswerItems = new AnswerItem[4];
     [SerializeField]
     public GameObject EndGameCanvas;
     [SerializeField]
@@ -21,9 +21,10 @@ public class GameController : MonoBehaviour
 
     List<Question> QuestionList = new List<Question>();
 
-    private int CorrectAnswerId = 0;
     private int CurrentQuestionNumber = 0;
     private int Score = 0;
+
+    void Awake() { }
 
     void Start()
     {
@@ -41,9 +42,8 @@ public class GameController : MonoBehaviour
         NextQuestion(QuestionList[CurrentQuestionNumber++]);
     }
 
-    public void GetAnswer( GameObject clickedItem )
+    public void GetAnswer( AnswerItem clickedAnswer )
     {
-        AnswerItem clickedAnswer = clickedItem.GetComponent<AnswerItem>();
         if (clickedAnswer.answer.isCorrect())
         {
             clickedAnswer.showAsCorrect();
@@ -57,14 +57,22 @@ public class GameController : MonoBehaviour
         }
 
         StartCoroutine( delayAfterAnswer() );
-
-        
     }
 
     IEnumerator delayAfterAnswer()
     {
+        foreach (AnswerItem item in AnswerItems)
+            item.disableButton();
+
         yield return new WaitForSeconds(1);
-        if (CurrentQuestionNumber < QuestionList.Count) NextQuestion(QuestionList[CurrentQuestionNumber++]);
+        if (CurrentQuestionNumber < QuestionList.Count)
+        {
+            NextQuestion(QuestionList[CurrentQuestionNumber++]);
+            foreach (AnswerItem item in AnswerItems) {
+                item.enableButton();
+            }
+                
+        }
         else DisplayEndGameCanvas();
     }
 
@@ -74,7 +82,7 @@ public class GameController : MonoBehaviour
         Answer[] shuffledAnswers = Question.shuffleAnswers(q);
         for( int i = 0; i < 4; i++)
         {
-            AnswerItems[i].GetComponent<AnswerItem>().setAnswer(shuffledAnswers[i]);
+            AnswerItems[i].setAnswer(shuffledAnswers[i]);
         }
     }
 

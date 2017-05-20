@@ -9,16 +9,16 @@ public class AnswerItem : MonoBehaviour
     private Text answerTextItem;
     private Color defaultColor;
 
-    void Start()
+    void Awake()
     {
-        answerTextItem = this.transform.GetChild(0).GetComponent<Text>();
+        answerTextItem = this.gameObject.transform.GetComponentInChildren<Text>();
         defaultColor = GetComponent<Image>().color;
     }
 
     public void setAnswer( Answer answer )
     {
         this.answer = answer;
-        this.answerTextItem.text = this.answer.getText();
+        answerTextItem.text = this.answer.getText();
 
         setItemColor(defaultColor);
     }
@@ -32,6 +32,15 @@ public class AnswerItem : MonoBehaviour
         setItemColor(Color.red);
     }
 
+    public void disableButton()
+    {
+        this.GetComponent<Button>().interactable = false;
+    }
+
+    public void enableButton()
+    {
+        this.GetComponent<Button>().interactable = true;
+    }
     private void setItemColor( Color newColor )
     {
         GetComponent<Image>().color = newColor;
