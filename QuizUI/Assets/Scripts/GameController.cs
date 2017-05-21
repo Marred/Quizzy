@@ -24,10 +24,21 @@ public class GameController : MonoBehaviour
     private int CurrentQuestionNumber = 0;
     private int Score = 0;
 
-    void Awake() { }
+    private int ModeId = 0;
+
+    void Awake()
+    {
+        ModeId = GameObject.Find("GameDataObject").GetComponent<GameData>().ModeId;
+
+        if (ModeId == 1)
+        {
+            StartCoroutine(delayUntilEndGame());
+        }
+    }
 
     void Start()
     {
+
         soundSource = (GameObject.Find("SoundController")).GetComponent<SoundController>();
 
         QuestionList.Add(new Question("Premierem którego kraju był Winston Churchill?", "Wielkiej Brytanii",
@@ -54,6 +65,7 @@ public class GameController : MonoBehaviour
         {
             soundSource.playIncorrectSound();
             clickedAnswer.showAsIncorrect();
+            if(ModeId == 2) DisplayEndGameCanvas("Błędna odpowiedź!", "Twój wynik to " + Score + "/" + CurrentQuestionNumber);
         }
 
         StartCoroutine( delayAfterAnswer() );
@@ -73,7 +85,7 @@ public class GameController : MonoBehaviour
             }
                 
         }
-        else DisplayEndGameCanvas();
+        else DisplayEndGameCanvas("Koniec pytań!", "Twój wynik to " + Score + "/" + CurrentQuestionNumber);
     }
 
     void NextQuestion(Question q)
@@ -86,18 +98,17 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void DisplayEndGameCanvas()
+    IEnumerator delayUntilEndGame()
+    {
+        yield return new WaitForSeconds(20);
+        DisplayEndGameCanvas("Koniec czasu!", "Twój wynik to " + Score + "/" + CurrentQuestionNumber);
+    }
+
+    void DisplayEndGameCanvas(string MainMessage, string ScoreMessage)
     {
         EndGameCanvas.SetActive(true);
-        if (((float) Score / QuestionList.Count) > 0.5)
-        {
-            EndGameMessage.GetComponent<Text>().text = "Gratulacje! Zdałeś!";
-        }
-        else
-        {
-            EndGameMessage.GetComponent<Text>().text = "Przykro mi! Nie zdałeś!";
-        }
-        EndGameScoreMessage.GetComponent<Text>().text = "Twój wynik to "+ Score +"/" + QuestionList.Count;
+        EndGameMessage.GetComponent<Text>().text = MainMessage;
+        EndGameScoreMessage.GetComponent<Text>().text = ScoreMessage;
     }
 
     public void ReturnToMenu()
