@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     public GameObject EndGameScoreMessage;
 
+    private byte CorrectAnswerId;
+
     private SoundController soundSource;
 
     List<Question> QuestionList = new List<Question>();
@@ -65,6 +67,7 @@ public class GameController : MonoBehaviour
         {
             soundSource.playIncorrectSound();
             clickedAnswer.showAsIncorrect();
+            AnswerItems[CorrectAnswerId].showAsCorrect();
             if(ModeId == 2) DisplayEndGameCanvas("Błędna odpowiedź!", "Twój wynik to " + Score + "/" + CurrentQuestionNumber);
         }
 
@@ -95,6 +98,7 @@ public class GameController : MonoBehaviour
         for( int i = 0; i < 4; i++)
         {
             AnswerItems[i].setAnswer(shuffledAnswers[i]);
+            if(shuffledAnswers[i].isCorrect()) CorrectAnswerId = (byte)i;
         }
     }
 
