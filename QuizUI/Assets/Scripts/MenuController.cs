@@ -35,16 +35,27 @@ public class MenuController : MonoBehaviour
     public GameObject CategoryMenuCanvas;
     [SerializeField]
     public GameObject ModeMenuCanvas;
+    [SerializeField]
+    public GameObject OptionsMenuCanvas;
 
     public void NewGameAction()
     {
         StartCoroutine(MoveCanvasToScreen(0.001f, DifficultyMenuCanvas.GetComponent<RectTransform>()));
         StartCoroutine(MoveCanvasOutFromScreen(0.001f, CategoryMenuCanvas.GetComponent<RectTransform>()));
         StartCoroutine(MoveCanvasOutFromScreen(0.001f, ModeMenuCanvas.GetComponent<RectTransform>()));
+        StartCoroutine(MoveCanvasOutFromScreen(0.001f, OptionsMenuCanvas.GetComponent<RectTransform>()));
         ClearSelection(3);
         SetButtonActive(NewGameButton);
     }
-
+    public void OptionsAction()
+    {
+        StartCoroutine(MoveCanvasToScreen(0.001f, OptionsMenuCanvas.GetComponent<RectTransform>()));
+        StartCoroutine(MoveCanvasOutFromScreen(0.001f, CategoryMenuCanvas.GetComponent<RectTransform>()));
+        StartCoroutine(MoveCanvasOutFromScreen(0.001f, DifficultyMenuCanvas.GetComponent<RectTransform>()));
+        StartCoroutine(MoveCanvasOutFromScreen(0.001f, ModeMenuCanvas.GetComponent<RectTransform>()));
+        ClearSelection(3);
+        SetButtonActive(OptionsButton);
+    }
     public void DifficultyAction(GameObject button)
     {
         StartCoroutine(MoveCanvasToScreen(0.001f, CategoryMenuCanvas.GetComponent<RectTransform>()));
@@ -108,11 +119,13 @@ public class MenuController : MonoBehaviour
 
     public void SetButtonActive(GameObject button)
     {
-        button.GetComponent<Image>().color = Color.blue;
+        button.GetComponent<Image>().fillCenter = true;
+        button.GetComponent<Image>().color = Color.grey;
     }
 
     public void SetButtonUnactive(GameObject button)
     {
+        button.GetComponent<Image>().fillCenter = false;
         button.GetComponent<Image>().color = Color.white;
     }
 
