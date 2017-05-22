@@ -36,7 +36,14 @@ public class AnswerItem : MonoBehaviour
     {
         this.GetComponent<Button>().interactable = false;
     }
-
+    public void hideButton()
+    {
+        this.gameObject.SetActive(false);
+    }
+    public void showButton()
+    {
+        this.gameObject.SetActive(true);
+    }
     public void enableButton()
     {
         this.GetComponent<Button>().interactable = true;

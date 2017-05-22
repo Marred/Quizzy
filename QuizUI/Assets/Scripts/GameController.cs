@@ -1,13 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GameController : MonoBehaviour
 {
+    enum GameModes { Simple, TimeFight, Perfect };
+
     [SerializeField]
     public GameObject QuestionText;
+    [SerializeField]
+    private Text QuestionNumText;
+    [SerializeField]
+    private Text PointsText;
     [SerializeField]
     public AnswerItem[] AnswerItems = new AnswerItem[4];
     [SerializeField]
@@ -16,6 +24,10 @@ public class GameController : MonoBehaviour
     public GameObject EndGameMessage;
     [SerializeField]
     public GameObject EndGameScoreMessage;
+    [SerializeField]
+    private GameObject RemoveIncorrectButton;
+    [SerializeField]
+    private Slider TimeBar;
 
     private byte CorrectAnswerId;
 
@@ -25,17 +37,28 @@ public class GameController : MonoBehaviour
 
     private int CurrentQuestionNumber = 0;
     private int Score = 0;
+    private int TimeFightSeconds = 20;
+    private float secondsCount;
 
-    private int ModeId = 0;
+    private GameModes ModeId = GameModes.Simple;
+
+    private bool RemovedIncorrect;
 
     void Awake()
     {
-        ModeId = GameObject.Find("GameDataObject").GetComponent<GameData>().ModeId;
-
-        if (ModeId == 1)
-        {
-            StartCoroutine(delayUntilEndGame());
+        try {
+            ModeId = (GameModes)GameObject.Find("GameDataObject").GetComponent<GameData>().ModeId;
+        } catch {
+            throw new Exception("You should start the game from the Menu scene!");
         }
+
+        if (ModeId == GameModes.TimeFight)
+        {
+            TimeBar.gameObject.SetActive(true);
+            secondsCount = TimeFightSeconds;
+        }
+        else
+            TimeBar.gameObject.SetActive(false);
     }
 
     void Start()
@@ -54,7 +77,13 @@ public class GameController : MonoBehaviour
             "Juliusz Cezar", "Kaligula"));
         NextQuestion(QuestionList[CurrentQuestionNumber++]);
     }
-
+    void Update()
+    {
+        if (ModeId == GameModes.TimeFight)
+        {
+            delayUntilEndGame();
+        }
+    }
     public void GetAnswer( AnswerItem clickedAnswer )
     {
         if (clickedAnswer.answer.isCorrect())
@@ -62,18 +91,37 @@ public class GameController : MonoBehaviour
             clickedAnswer.showAsCorrect();
             soundSource.playCorrectSound();
             Score++;
+
+            PointsText.text = "Punktów: " + Score;
         }
         else
         {
             soundSource.playIncorrectSound();
             clickedAnswer.showAsIncorrect();
             AnswerItems[CorrectAnswerId].showAsCorrect();
-            if(ModeId == 2) DisplayEndGameCanvas("Błędna odpowiedź!", "Twój wynik to " + Score + "/" + CurrentQuestionNumber);
+            if(ModeId == GameModes.Perfect) DisplayEndGameCanvas("Błędna odpowiedź!", "Twój wynik to " + Score + "/" + CurrentQuestionNumber);
         }
 
         StartCoroutine( delayAfterAnswer() );
     }
 
+    public void removeTwoIncorrectAnswers()
+    {
+        if (RemovedIncorrect) return;
+
+        RemovedIncorrect = true;
+        RemoveIncorrectButton.SetActive(false);
+
+        System.Random rnd = new System.Random();
+        AnswerItem[] items = AnswerItems.OrderBy(x => rnd.Next()).
+            Where(item=>item.answer.isCorrect() == false ).
+            Take(2).ToArray();
+
+        foreach( AnswerItem item in items)
+        {
+            item.hideButton();
+        }
+    }
     IEnumerator delayAfterAnswer()
     {
         foreach (AnswerItem item in AnswerItems)
@@ -93,19 +141,28 @@ public class GameController : MonoBehaviour
 
     void NextQuestion(Question q)
     {
+        RemovedIncorrect = false;
+        RemoveIncorrectButton.SetActive(true);
+        QuestionNumText.text = "Pytanie: " + CurrentQuestionNumber + "/" + QuestionList.Count;
         QuestionText.GetComponent<Text>().text = q.QuestionText;
         Answer[] shuffledAnswers = Question.shuffleAnswers(q);
+        CorrectAnswerId = (byte)Array.IndexOf(shuffledAnswers, q.Answers[0]);
+
         for( int i = 0; i < 4; i++)
         {
+            AnswerItems[i].showButton();
             AnswerItems[i].setAnswer(shuffledAnswers[i]);
-            if(shuffledAnswers[i].isCorrect()) CorrectAnswerId = (byte)i;
         }
     }
 
-    IEnumerator delayUntilEndGame()
+    void delayUntilEndGame()
     {
-        yield return new WaitForSeconds(20);
-        DisplayEndGameCanvas("Koniec czasu!", "Twój wynik to " + Score + "/" + CurrentQuestionNumber);
+        TimeBar.value = secondsCount / TimeFightSeconds;
+        secondsCount -= Time.deltaTime;
+        if (secondsCount <= 0)
+        {
+            DisplayEndGameCanvas("Koniec czasu!", "Twój wynik to " + Score + "/" + CurrentQuestionNumber);
+        }
     }
 
     void DisplayEndGameCanvas(string MainMessage, string ScoreMessage)
