@@ -8,6 +8,9 @@ public class GameData : MonoBehaviour
 
     public static GameData Data;
     public int ModeId;
+    public int SoundEffectsVolume;
+    public int MusicVolume;
+    public int BackgroundType;
 
     void Awake()
     {

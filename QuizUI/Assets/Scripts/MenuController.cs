@@ -105,6 +105,7 @@ public class MenuController : MonoBehaviour
             canvas.localPosition += Vector3.down * Time.deltaTime / t;
             yield return null;
         }
+        canvas.localPosition = new Vector3(canvas.localPosition.x, 0, canvas.localPosition.z);
     }
 
     public IEnumerator MoveCanvasOutFromScreen(float t, RectTransform canvas)
