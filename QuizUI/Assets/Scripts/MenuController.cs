@@ -102,7 +102,7 @@ public class MenuController : MonoBehaviour
     {
         while (canvas.localPosition.y > 0)
         {
-            canvas.localPosition += Vector3.down * Time.deltaTime / t;
+            canvas.localPosition += Vector3.down * Time.deltaTime / t * 2;
             yield return null;
         }
         canvas.localPosition = new Vector3(canvas.localPosition.x, 0, canvas.localPosition.z);
@@ -112,7 +112,7 @@ public class MenuController : MonoBehaviour
     {
         while (canvas.localPosition.y < 10 && canvas.localPosition.y > -500)
         {
-            canvas.localPosition += Vector3.down * Time.deltaTime / t;
+            canvas.localPosition += Vector3.down * Time.deltaTime / t * 2;
             yield return null;
         }
         if (canvas.localPosition.y < 400) canvas.localPosition += Vector3.up * 1200;

@@ -18,10 +18,13 @@ public class GameController : MonoBehaviour
     private Text PointsText;
     [SerializeField]
     public AnswerItem[] AnswerItems = new AnswerItem[4];
-    [SerializeField]
-    public GameObject EndGameCanvas;
-    [SerializeField]
-    public GameObject EndGameMessage;
+
+    [SerializeField] public GameObject QuestionsCanvas;
+    [SerializeField] public GameObject TeacherCanvasImage;
+    [SerializeField] public GameObject TeacherCanvasText;
+    [SerializeField] public GameObject TeacherEndGameObject;
+    [SerializeField] public Text TeacherEndGameText;
+
     [SerializeField]
     public GameObject EndGameScoreMessage;
     [SerializeField]
@@ -44,7 +47,7 @@ public class GameController : MonoBehaviour
 
     private bool RemovedIncorrect;
 
-    void Awake()
+    /*void Awake()
     {
         try {
             ModeId = (GameModes)GameObject.Find("GameDataObject").GetComponent<GameData>().ModeId;
@@ -59,7 +62,7 @@ public class GameController : MonoBehaviour
         }
         else
             TimeBar.gameObject.SetActive(false);
-    }
+    }*/
 
     void Start()
     {
@@ -75,7 +78,7 @@ public class GameController : MonoBehaviour
             "Stany Zjednoczone", "Egipt", "Rosja"));
         QuestionList.Add(new Question("Który z władców nie władał Rzymem?", "Aleksander Wielki", "Neron",
             "Juliusz Cezar", "Kaligula"));
-        NextQuestion(QuestionList[CurrentQuestionNumber++]);
+        StartCoroutine(DisplayStartGameCanvas());
     }
     void Update()
     {
@@ -84,7 +87,7 @@ public class GameController : MonoBehaviour
             delayUntilEndGame();
         }
     }
-    public void GetAnswer( AnswerItem clickedAnswer )
+    public void GetAnswer(AnswerItem clickedAnswer)
     {
         if (clickedAnswer.answer.isCorrect())
         {
@@ -99,10 +102,10 @@ public class GameController : MonoBehaviour
             soundSource.playIncorrectSound();
             clickedAnswer.showAsIncorrect();
             AnswerItems[CorrectAnswerId].showAsCorrect();
-            if(ModeId == GameModes.Perfect) DisplayEndGameCanvas("Błędna odpowiedź!", "Twój wynik to " + Score + "/" + CurrentQuestionNumber);
+            if (ModeId == GameModes.Perfect) StartCoroutine(DisplayEndGameCanvas());
         }
 
-        StartCoroutine( delayAfterAnswer() );
+        StartCoroutine(delayAfterAnswer());
     }
 
     public void removeTwoIncorrectAnswers()
@@ -114,10 +117,10 @@ public class GameController : MonoBehaviour
 
         System.Random rnd = new System.Random();
         AnswerItem[] items = AnswerItems.OrderBy(x => rnd.Next()).
-            Where(item=>item.answer.isCorrect() == false ).
+            Where(item => item.answer.isCorrect() == false).
             Take(2).ToArray();
 
-        foreach( AnswerItem item in items)
+        foreach (AnswerItem item in items)
         {
             item.hideButton();
         }
@@ -131,12 +134,13 @@ public class GameController : MonoBehaviour
         if (CurrentQuestionNumber < QuestionList.Count)
         {
             NextQuestion(QuestionList[CurrentQuestionNumber++]);
-            foreach (AnswerItem item in AnswerItems) {
+            foreach (AnswerItem item in AnswerItems)
+            {
                 item.enableButton();
             }
-                
+
         }
-        else DisplayEndGameCanvas("Koniec pytań!", "Twój wynik to " + Score + "/" + CurrentQuestionNumber);
+        else StartCoroutine(DisplayEndGameCanvas());
     }
 
     void NextQuestion(Question q)
@@ -148,7 +152,7 @@ public class GameController : MonoBehaviour
         Answer[] shuffledAnswers = Question.shuffleAnswers(q);
         CorrectAnswerId = (byte)Array.IndexOf(shuffledAnswers, q.Answers[0]);
 
-        for( int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
             AnswerItems[i].showButton();
             AnswerItems[i].setAnswer(shuffledAnswers[i]);
@@ -161,15 +165,42 @@ public class GameController : MonoBehaviour
         secondsCount -= Time.deltaTime;
         if (secondsCount <= 0)
         {
-            DisplayEndGameCanvas("Koniec czasu!", "Twój wynik to " + Score + "/" + CurrentQuestionNumber);
+            StartCoroutine(DisplayEndGameCanvas());
         }
     }
 
-    void DisplayEndGameCanvas(string MainMessage, string ScoreMessage)
+    IEnumerator DisplayStartGameCanvas()
     {
-        EndGameCanvas.SetActive(true);
-        EndGameMessage.GetComponent<Text>().text = MainMessage;
-        EndGameScoreMessage.GetComponent<Text>().text = ScoreMessage;
+        Transform teacherPosition = TeacherCanvasImage.GetComponent<Transform>();
+        while (teacherPosition.localPosition.x > 650)
+        {
+            teacherPosition.localPosition += Vector3.left * Time.deltaTime / 0.001f;
+            yield return null;
+        }
+        TeacherCanvasText.SetActive(true);
+        yield return new WaitForSeconds(4);
+        TeacherCanvasText.SetActive(false);
+        while (teacherPosition.localPosition.x < 1200)
+        {
+            teacherPosition.localPosition += Vector3.right * Time.deltaTime / 0.001f;
+            yield return null;
+        }
+        QuestionsCanvas.SetActive(true);
+        NextQuestion(QuestionList[CurrentQuestionNumber++]);
+    }
+
+    IEnumerator DisplayEndGameCanvas()
+    {
+        QuestionsCanvas.SetActive(false);
+        Transform teacherPosition = TeacherCanvasImage.GetComponent<Transform>();
+        while (teacherPosition.localPosition.x > 650)
+        {
+            teacherPosition.localPosition += Vector3.left * Time.deltaTime / 0.001f;
+            yield return null;
+        }
+        TeacherEndGameObject.SetActive(true);
+        String EndGameMessage = "Gratulacje! Zdałeś! \n Twój wynik to " + Score + "/" + CurrentQuestionNumber;
+        TeacherEndGameText.text = EndGameMessage;
     }
 
     public void ReturnToMenu()
