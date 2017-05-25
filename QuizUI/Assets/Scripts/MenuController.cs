@@ -100,7 +100,7 @@ public class MenuController : MonoBehaviour
 
     public IEnumerator MoveCanvasToScreen(float t, RectTransform canvas)
     {
-        while (canvas.localPosition.y > 0)
+        while (canvas.localPosition.y > 10)
         {
             canvas.localPosition += Vector3.down * Time.deltaTime / t * 2;
             yield return null;

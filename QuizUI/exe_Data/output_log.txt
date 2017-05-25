@@ -1,0 +1,55 @@
+Initialize engine version: 5.6.1f1 (2860b30f0b54)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Intel(R) HD Graphics 5500 (ID=0x1616)
+    Vendor:   Intel
+    VRAM:     1128 MB
+    Driver:   20.19.15.4624
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.225 seconds
+Platform assembly: C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 5.294673 ms
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 7.325954 ms
+
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 456.
+Total: 0.548641 ms (FindLiveObjects: 0.058783 ms CreateObjectMapping: 0.034056 ms MarkObjects: 0.428743 ms  DeleteObjects: 0.026592 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.522516 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 532.
+Total: 0.796836 ms (FindLiveObjects: 0.069513 ms CreateObjectMapping: 0.033123 ms MarkObjects: 0.652211 ms  DeleteObjects: 0.041054 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.824828 ms
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 456.
+Total: 0.619554 ms (FindLiveObjects: 0.059249 ms CreateObjectMapping: 0.041987 ms MarkObjects: 0.486126 ms  DeleteObjects: 0.031724 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.521582 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 532.
+Total: 0.689534 ms (FindLiveObjects: 0.065314 ms CreateObjectMapping: 0.030324 ms MarkObjects: 0.554240 ms  DeleteObjects: 0.038255 ms)
+
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 24c8 -> priority: 1 
+  Thread -> id: 414 -> priority: 1 

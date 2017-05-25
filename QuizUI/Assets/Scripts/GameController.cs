@@ -52,6 +52,8 @@ public class GameController : MonoBehaviour
 
     private bool RemovedIncorrect;
 
+    private bool showingEducationalCanvas = false;
+
     void Awake()
     {
         try {
@@ -87,7 +89,7 @@ public class GameController : MonoBehaviour
     }
     void Update()
     {
-        if (ModeId == GameModes.TimeFight)
+        if (ModeId == GameModes.TimeFight && showingEducationalCanvas == false )
         {
             delayUntilEndGame();
         }
@@ -138,11 +140,19 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(1);
         StartCoroutine(DisplayEducationalCanvas());
     }
+    public void skipQuestion( GameObject skipButton )
+    {
+        skipButton.SetActive(false);
 
+        foreach (AnswerItem item in AnswerItems)
+            item.disableButton();
+
+        StartCoroutine(DisplayEducationalCanvas());
+    }
     void NextQuestion(Question q)
     {
         RemovedIncorrect = false;
-        RemoveIncorrectButton.SetActive(true);
+        //RemoveIncorrectButton.SetActive(true);
         QuestionNumText.text = "Pytanie: " + CurrentQuestionNumber + "/" + QuestionList.Count;
         QuestionText.GetComponent<Text>().text = q.QuestionText;
         Answer[] shuffledAnswers = Question.shuffleAnswers(q);
@@ -169,16 +179,20 @@ public class GameController : MonoBehaviour
     {
         if (!HasGameEnded)
         {
+            showingEducationalCanvas = true;
             QuestionsCanvas.SetActive(false);
             Transform teacherPosition = TeacherLeftImage.GetComponent<Transform>();
-            while (teacherPosition.localPosition.x < -650)
+            while (teacherPosition.localPosition.x < -600)
             {
                 teacherPosition.localPosition += Vector3.right * Time.deltaTime / 0.001f;
                 yield return null;
             }
             TeacherLeftText.SetActive(true);
             EducationalText.text = QuestionList[(CurrentQuestionNumber++)].EducationalText;
-            yield return new WaitForSeconds(5);
+            while (!Input.GetMouseButtonDown(0))
+            {
+                yield return null;
+            }
             TeacherLeftText.SetActive(false);
             while (teacherPosition.localPosition.x > -1200)
             {
@@ -193,7 +207,7 @@ public class GameController : MonoBehaviour
                 {
                     item.enableButton();
                 }
-
+                showingEducationalCanvas = false;
             }
             else StartCoroutine(DisplayEndGameCanvas());
         }
@@ -202,7 +216,7 @@ public class GameController : MonoBehaviour
     IEnumerator DisplayStartGameCanvas()
     {
         Transform teacherPosition = TeacherCanvasImage.GetComponent<Transform>();
-        while (teacherPosition.localPosition.x > 650)
+        while (teacherPosition.localPosition.x > 600)
         {
             teacherPosition.localPosition += Vector3.left * Time.deltaTime / 0.001f;
             yield return null;
@@ -224,7 +238,7 @@ public class GameController : MonoBehaviour
         HasGameEnded = true;
         QuestionsCanvas.SetActive(false);
         Transform teacherPosition = TeacherCanvasImage.GetComponent<Transform>();
-        while (teacherPosition.localPosition.x > 650)
+        while (teacherPosition.localPosition.x > 600)
         {
             teacherPosition.localPosition += Vector3.left * Time.deltaTime / 0.001f;
             yield return null;
@@ -236,6 +250,7 @@ public class GameController : MonoBehaviour
 
     public void ReturnToMenu()
     {
+        Destroy(GameObject.Find("GameDataObject"));
         SceneManager.LoadScene(0);
     }
 }
