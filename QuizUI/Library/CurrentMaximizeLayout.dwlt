@@ -20,10 +20,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 683, y: 471}
-  m_MaxSize: {x: 14002, y: 14021}
+  m_MinSize: {x: 679, y: 471}
+  m_MaxSize: {x: 14000, y: 14021}
   vertical: 0
-  controlID: 9416
+  controlID: 11551
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -120,10 +120,10 @@ MonoBehaviour:
     y: 0
     width: 1504
     height: 947
-  m_MinSize: {x: 406, y: 471}
+  m_MinSize: {x: 404, y: 471}
   m_MaxSize: {x: 10000, y: 14021}
   vertical: 1
-  controlID: 9417
+  controlID: 11552
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,10 +144,10 @@ MonoBehaviour:
     y: 0
     width: 1504
     height: 510
-  m_MinSize: {x: 406, y: 221}
-  m_MaxSize: {x: 8006, y: 4021}
+  m_MinSize: {x: 404, y: 221}
+  m_MaxSize: {x: 8004, y: 4021}
   vertical: 0
-  controlID: 9418
+  controlID: 11529
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -166,8 +166,8 @@ MonoBehaviour:
     y: 0
     width: 372
     height: 510
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -201,9 +201,9 @@ MonoBehaviour:
     height: 489
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 32280000
-    m_LastClickedID: 10290
-    m_ExpandedIDs: 92eaffff2aecffff16faffffe6fbffff000000003228000040280000502800005e280000a2280000b8280000002900000a290000
+    m_SelectedIDs: 26250000
+    m_LastClickedID: 0
+    m_ExpandedIDs: b235ffff4a3affff023dffff0241ffff4e42ffffc845ffffa248ffffae4dffff4452ffffc08dffffaaa2ffff6ab0ffff54e8ffffe6fbffff00000000ba2500004a2600009a260000ba7c0000e47c0000ee7c0000167d0000247d0000547d0000847d0000ea8f0000f48f00001c9000002a9000008a900000f69c0000009d0000369d0000969d0000b8a10000c2a10000eaa10000f8a100003ea2000058a20000a6aa000046ab0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -222,7 +222,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 5}
     m_SearchString: 
   m_ExpandedScenes:
-  - Menu
+  - Game
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -280,14 +280,14 @@ MonoBehaviour:
     width: 1128
     height: 489
   m_SceneLighting: 1
-  lastFramingTime: 411.5405352028392
+  lastFramingTime: 3153.6206486480073
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -1.1493542, y: -3.3890922, z: 0}
+    m_Target: {x: 0, y: 0, z: 0.0000076293945}
     speed: 2
-    m_Value: {x: -1.1493542, y: -3.3890922, z: 0}
+    m_Value: {x: 0, y: 0, z: 0.0000076293945}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -314,9 +314,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 10.129163
+    m_Target: 12.470069
     speed: 2
-    m_Value: 10.129163
+    m_Value: 12.470069
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -416,18 +416,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Images
+    - Assets/Scenes
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Images
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\necho\Documents\GitHub\Quizzy\QuizUI
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 4e250000
-    m_LastClickedID: 9550
+    m_SelectedIDs: 78250000
+    m_LastClickedID: 9592
     m_ExpandedIDs: 00000000be24000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -481,8 +481,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 32280000
-    m_LastClickedInstanceID: 10290
+    m_SelectedInstanceIDs: 26250000
+    m_LastClickedInstanceID: 9510
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c623000000000000
     m_RenameOverlay:
@@ -555,8 +555,8 @@ MonoBehaviour:
     y: 0
     width: 416
     height: 947
-  m_MinSize: {x: 277, y: 71}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}

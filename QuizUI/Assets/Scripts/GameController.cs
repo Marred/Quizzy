@@ -22,6 +22,9 @@ public class GameController : MonoBehaviour
     [SerializeField] public GameObject QuestionsCanvas;
     [SerializeField] public GameObject TeacherCanvasImage;
     [SerializeField] public GameObject TeacherCanvasText;
+    [SerializeField] public GameObject TeacherLeftImage;
+    [SerializeField] public GameObject TeacherLeftText;
+    [SerializeField] public Text EducationalText;
     [SerializeField] public GameObject TeacherEndGameObject;
     [SerializeField] public Text TeacherEndGameText;
 
@@ -43,11 +46,13 @@ public class GameController : MonoBehaviour
     private int TimeFightSeconds = 20;
     private float secondsCount;
 
+    private bool HasGameEnded = false;
+
     private GameModes ModeId = GameModes.Simple;
 
     private bool RemovedIncorrect;
 
-    /*void Awake()
+    void Awake()
     {
         try {
             ModeId = (GameModes)GameObject.Find("GameDataObject").GetComponent<GameData>().ModeId;
@@ -62,21 +67,21 @@ public class GameController : MonoBehaviour
         }
         else
             TimeBar.gameObject.SetActive(false);
-    }*/
+    }
 
     void Start()
     {
 
         soundSource = (GameObject.Find("SoundController")).GetComponent<SoundController>();
 
-        QuestionList.Add(new Question("Premierem którego kraju był Winston Churchill?", "Wielkiej Brytanii",
+        QuestionList.Add(new Question("Premierem którego kraju był Winston Churchill?", "Churchill był jednym z najważniejszych polityków Aliantów w czasie II wojny światowej, brał udział w konferencjach teherańskiej, jałtańskiej i poczdamskiej, gdzie ustalano losy świata po wojnie.", "Wielkiej Brytanii",
             "Stanów Zjednoczonych", "Australii", "Rosji"));
-        QuestionList.Add(new Question("W którym roku odbyła się bitwa pod Grunwaldem?", "1410", "996", "1944", "2137"));
-        QuestionList.Add(new Question("Które miasto było pierwszą stolicą Polski?", "Gniezno", "Warszawa", "Kalety",
+        QuestionList.Add(new Question("W którym roku odbyła się bitwa pod Grunwaldem?", "Jedna z największych bitew w historii średniowiecznej Europy, stoczona na polach pod Grunwaldem 15 lipca 1410 w czasie trwania wielkiej wojny między siłami zakonu krzyżackiego a połączonymi siłami polskimi i litewskimi.", "1410", "996", "1944", "2137"));
+        QuestionList.Add(new Question("Które miasto było pierwszą stolicą Polski?", "Dagome iudex, dokument z roku 991 podpisany przez Mieszka I, wskazuje jednoznacznie, że stolicą Polski było Gniezno, choć ważną rolę pełnił również Poznań, a wczasach plemiennych - Kalisz oraz Giecz.", "Gniezno", "Warszawa", "Kalety",
             "Bogdaniec"));
-        QuestionList.Add(new Question("Na terenie którego kraju powstała pierwsza cywilizacja?", "Indie",
+        QuestionList.Add(new Question("Na terenie którego kraju powstała pierwsza cywilizacja?", "Najnowsze badania wskazują, że cywilizacja doliny Indusu istniała już 6 000 lat p.n.e., co czyni ją pierwszą cywilizacją na ziemi.", "Indie",
             "Stany Zjednoczone", "Egipt", "Rosja"));
-        QuestionList.Add(new Question("Który z władców nie władał Rzymem?", "Aleksander Wielki", "Neron",
+        QuestionList.Add(new Question("Który z władców nie władał Rzymem?", "Aleksander III Macedoński, zwany Aleksandrem Wielkim, wybitny strateg, jeden z największych zdobywców w historii. Okres panowania Aleksandra wyznacza granicę między dwiema epokami historii starożytnej: okresem klasycznym i epoką hellenistyczną.", "Aleksander Wielki", "Neron",
             "Juliusz Cezar", "Kaligula"));
         StartCoroutine(DisplayStartGameCanvas());
     }
@@ -131,16 +136,7 @@ public class GameController : MonoBehaviour
             item.disableButton();
 
         yield return new WaitForSeconds(1);
-        if (CurrentQuestionNumber < QuestionList.Count)
-        {
-            NextQuestion(QuestionList[CurrentQuestionNumber++]);
-            foreach (AnswerItem item in AnswerItems)
-            {
-                item.enableButton();
-            }
-
-        }
-        else StartCoroutine(DisplayEndGameCanvas());
+        StartCoroutine(DisplayEducationalCanvas());
     }
 
     void NextQuestion(Question q)
@@ -169,6 +165,40 @@ public class GameController : MonoBehaviour
         }
     }
 
+    IEnumerator DisplayEducationalCanvas()
+    {
+        if (!HasGameEnded)
+        {
+            QuestionsCanvas.SetActive(false);
+            Transform teacherPosition = TeacherLeftImage.GetComponent<Transform>();
+            while (teacherPosition.localPosition.x < -650)
+            {
+                teacherPosition.localPosition += Vector3.right * Time.deltaTime / 0.001f;
+                yield return null;
+            }
+            TeacherLeftText.SetActive(true);
+            EducationalText.text = QuestionList[(CurrentQuestionNumber++)].EducationalText;
+            yield return new WaitForSeconds(5);
+            TeacherLeftText.SetActive(false);
+            while (teacherPosition.localPosition.x > -1200)
+            {
+                teacherPosition.localPosition += Vector3.left * Time.deltaTime / 0.001f;
+                yield return null;
+            }
+            QuestionsCanvas.SetActive(true);
+            if (CurrentQuestionNumber < QuestionList.Count)
+            {
+                NextQuestion(QuestionList[CurrentQuestionNumber]);
+                foreach (AnswerItem item in AnswerItems)
+                {
+                    item.enableButton();
+                }
+
+            }
+            else StartCoroutine(DisplayEndGameCanvas());
+        }
+    }
+
     IEnumerator DisplayStartGameCanvas()
     {
         Transform teacherPosition = TeacherCanvasImage.GetComponent<Transform>();
@@ -178,7 +208,7 @@ public class GameController : MonoBehaviour
             yield return null;
         }
         TeacherCanvasText.SetActive(true);
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3);
         TeacherCanvasText.SetActive(false);
         while (teacherPosition.localPosition.x < 1200)
         {
@@ -186,11 +216,12 @@ public class GameController : MonoBehaviour
             yield return null;
         }
         QuestionsCanvas.SetActive(true);
-        NextQuestion(QuestionList[CurrentQuestionNumber++]);
+        NextQuestion(QuestionList[CurrentQuestionNumber]);
     }
 
     IEnumerator DisplayEndGameCanvas()
     {
+        HasGameEnded = true;
         QuestionsCanvas.SetActive(false);
         Transform teacherPosition = TeacherCanvasImage.GetComponent<Transform>();
         while (teacherPosition.localPosition.x > 650)

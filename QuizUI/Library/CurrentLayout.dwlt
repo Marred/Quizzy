@@ -109,7 +109,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 495}
   m_MaxSize: {x: 14004, y: 14045}
   vertical: 0
-  controlID: 10884
+  controlID: 11775
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 495}
   m_MaxSize: {x: 10002, y: 14045}
   vertical: 1
-  controlID: 10885
+  controlID: 11776
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 224}
   m_MaxSize: {x: 8006, y: 4024}
   vertical: 0
-  controlID: 10886
+  controlID: 11777
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -365,9 +365,9 @@ MonoBehaviour:
     height: 489
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 32280000
-    m_LastClickedID: 10290
-    m_ExpandedIDs: 92eaffff2aecffff16faffffe6fbffff000000003228000040280000502800005e280000a2280000b8280000002900000a290000
+    m_SelectedIDs: 
+    m_LastClickedID: 0
+    m_ExpandedIDs: fa32ffffb235ffff4a3affff023dffff0241ffff4e42ffffc845ffffa248ffffae4dffff4452ffffc08dffffaaa2ffff6ab0ffff54e8ffffe6fbffff00000000ba2500004a2600009a260000ba7c0000e47c0000ee7c0000167d0000247d0000547d0000847d0000ea8f0000f48f00001c9000002a9000008a900000f69c0000009d0000369d0000969d0000b8a10000c2a10000eaa10000f8a100003ea2000058a20000a6aa000046ab0000e8b5000088b60000e0b60000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -417,14 +417,14 @@ MonoBehaviour:
     width: 1128
     height: 489
   m_SceneLighting: 1
-  lastFramingTime: 411.5405352028392
+  lastFramingTime: 3153.6206486480073
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -1.1493542, y: -3.3890922, z: 0}
+    m_Target: {x: 0, y: 0, z: 0.0000076293945}
     speed: 2
-    m_Value: {x: -1.1493542, y: -3.3890922, z: 0}
+    m_Value: {x: 0, y: 0, z: 0.0000076293945}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -451,9 +451,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 10.129163
+    m_Target: 12.470069
     speed: 2
-    m_Value: 10.129163
+    m_Value: 12.470069
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -527,18 +527,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Images
+    - Assets/Scenes
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Images
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\necho\Documents\GitHub\Quizzy\QuizUI
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 4e250000
-    m_LastClickedID: 9550
+    m_SelectedIDs: 78250000
+    m_LastClickedID: 9592
     m_ExpandedIDs: 00000000be24000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -594,7 +594,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c623000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
