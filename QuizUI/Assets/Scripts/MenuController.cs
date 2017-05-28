@@ -37,10 +37,13 @@ public class MenuController : MonoBehaviour
     public GameObject ModeMenuCanvas;
     [SerializeField]
     public GameObject OptionsMenuCanvas;
+    [SerializeField]
+    public GameObject RankCanvas;
 
     public void NewGameAction()
     {
         StartCoroutine(MoveCanvasToScreen(0.001f, DifficultyMenuCanvas.GetComponent<RectTransform>()));
+        StartCoroutine(MoveCanvasOutFromScreen(0.001f, RankCanvas.GetComponent<RectTransform>()));
         StartCoroutine(MoveCanvasOutFromScreen(0.001f, CategoryMenuCanvas.GetComponent<RectTransform>()));
         StartCoroutine(MoveCanvasOutFromScreen(0.001f, ModeMenuCanvas.GetComponent<RectTransform>()));
         StartCoroutine(MoveCanvasOutFromScreen(0.001f, OptionsMenuCanvas.GetComponent<RectTransform>()));
@@ -50,6 +53,7 @@ public class MenuController : MonoBehaviour
     public void OptionsAction()
     {
         StartCoroutine(MoveCanvasToScreen(0.001f, OptionsMenuCanvas.GetComponent<RectTransform>()));
+        StartCoroutine(MoveCanvasOutFromScreen(0.001f, RankCanvas.GetComponent<RectTransform>()));
         StartCoroutine(MoveCanvasOutFromScreen(0.001f, CategoryMenuCanvas.GetComponent<RectTransform>()));
         StartCoroutine(MoveCanvasOutFromScreen(0.001f, DifficultyMenuCanvas.GetComponent<RectTransform>()));
         StartCoroutine(MoveCanvasOutFromScreen(0.001f, ModeMenuCanvas.GetComponent<RectTransform>()));
@@ -97,15 +101,57 @@ public class MenuController : MonoBehaviour
                 goto case 2;
         }
     }
+    public void Start()
+    {
+        if (PlayerPrefs.GetInt("stats") == 0) setDefaults();
 
+        setupRanking();
+    }
+
+    void setupRanking()
+    {
+        foreach (string prefix in new string[] { "Standard", "Time", "Perfect" } ){
+            for( int i = 1;i <= 3;i++) {
+                Transform myPlace = RankCanvas.transform.Find(prefix + "Rank/Place" + i).transform;
+
+                myPlace.Find("Name").GetComponent<Text>().text = PlayerPrefs.GetString(prefix + "_name_" + i);
+                myPlace.Find("Points").GetComponent<Text>().text = PlayerPrefs.GetInt(prefix + "_points_" + i) + " pkt";
+            }
+        }
+    }
+
+    void setDefaults()
+    {
+        PlayerPrefs.SetInt("stats", 1);
+        PlayerPrefs.SetString("Standard_name_1", "Daniel");
+        PlayerPrefs.SetInt("Standard_points_1", 5);
+        PlayerPrefs.SetString("Standard_name_2", "Mariusz");
+        PlayerPrefs.SetInt("Standard_points_2", 4);
+        PlayerPrefs.SetString("Standard_name_3", "Kajetan");
+        PlayerPrefs.SetInt("Standard_points_3", 4);
+
+        PlayerPrefs.SetString("Time_name_1", "Bartek M.");
+        PlayerPrefs.SetInt("Time_points_1", 5);
+        PlayerPrefs.SetString("Time_name_2", "Gabrysia M.");
+        PlayerPrefs.SetInt("Time_points_2", 3);
+        PlayerPrefs.SetString("Time_name_3", "Maciek");
+        PlayerPrefs.SetInt("Time_points_3", 3);
+
+        PlayerPrefs.SetString("Perfect_name_1", "Anna");
+        PlayerPrefs.SetInt("Perfect_points_1", 5);
+        PlayerPrefs.SetString("Perfect_name_2", "Jacek");
+        PlayerPrefs.SetInt("Perfect_points_2", 4);
+        PlayerPrefs.SetString("Perfect_name_3", "Marzena");
+        PlayerPrefs.SetInt("Perfect_points_3", 3);
+    }
     public IEnumerator MoveCanvasToScreen(float t, RectTransform canvas)
     {
-        while (canvas.localPosition.y > 10)
+        while (canvas.localPosition.y > 50)
         {
             canvas.localPosition += Vector3.down * Time.deltaTime / t * 2;
             yield return null;
         }
-        canvas.localPosition = new Vector3(canvas.localPosition.x, 0, canvas.localPosition.z);
+        canvas.localPosition = new Vector3(canvas.localPosition.x, 47, canvas.localPosition.z);
     }
 
     public IEnumerator MoveCanvasOutFromScreen(float t, RectTransform canvas)
@@ -115,7 +161,7 @@ public class MenuController : MonoBehaviour
             canvas.localPosition += Vector3.down * Time.deltaTime / t * 2;
             yield return null;
         }
-        if (canvas.localPosition.y < 400) canvas.localPosition += Vector3.up * 1200;
+        if (canvas.localPosition.y < 400) canvas.localPosition = new Vector3(canvas.localPosition.x, 800, canvas.localPosition.z);
     }
 
     public void SetButtonActive(GameObject button)

@@ -26,6 +26,12 @@ public class GameController : MonoBehaviour
     [SerializeField] public GameObject TeacherLeftText;
     [SerializeField] public Text EducationalText;
     [SerializeField] public GameObject TeacherEndGameObject;
+    [SerializeField]
+    public GameObject TeacherEndGameHighScore;
+    [SerializeField]
+    public Text TeacherEndGameHighScoreText;
+    [SerializeField]
+    public InputField TeacherEndGameHighScoreInput;
     [SerializeField] public Text TeacherEndGameText;
 
     [SerializeField]
@@ -243,11 +249,58 @@ public class GameController : MonoBehaviour
             teacherPosition.localPosition += Vector3.left * Time.deltaTime / 0.001f;
             yield return null;
         }
-        TeacherEndGameObject.SetActive(true);
-        String EndGameMessage = "Gratulacje! Zdałeś! \n Twój wynik to " + Score + "/" + CurrentQuestionNumber;
-        TeacherEndGameText.text = EndGameMessage;
+        if( hasBeatenRecord(Score) ) {
+            String EndGameMessage = "Gratulacje! Pobiłeś nowy rekord! " + Score + "/" + CurrentQuestionNumber;
+            TeacherEndGameHighScoreText.text = EndGameMessage;
+            TeacherEndGameHighScore.SetActive(true);
+        }
+        else
+        {
+            String EndGameMessage = "Gratulacje! Zdałeś! \n Twój wynik to " + Score + "/" + CurrentQuestionNumber;
+            TeacherEndGameText.text = EndGameMessage;
+            TeacherEndGameObject.SetActive(true);
+        }
+        
     }
 
+    public void saveRecord()
+    {
+        string newName = TeacherEndGameHighScoreInput.text;
+        string prefix = getPrefix();
+
+        int myPlace = 0;
+        for (int i = 3; i > 0; i-- )
+            if (PlayerPrefs.GetInt(prefix + "_points_" + i) < Score)
+                myPlace = i;
+
+        for( int i = 2; i > myPlace; i--)
+        {
+            PlayerPrefs.SetInt(prefix + "_points_" + i, PlayerPrefs.GetInt(prefix + "_points_" + (i-1)));
+            PlayerPrefs.SetString(prefix + "_name_" + i, PlayerPrefs.GetString(prefix + "_name_" + (i-1)));
+        }
+        PlayerPrefs.SetInt(prefix + "_points_" + myPlace, Score);
+        PlayerPrefs.SetString(prefix + "_name_" + myPlace, newName);
+        ReturnToMenu();
+    }
+    bool hasBeatenRecord( int num )
+    {
+        string prefix = getPrefix();
+        if (PlayerPrefs.GetInt(prefix + "_points_" + 3) < num)
+            return true;
+
+        return false;
+    }
+
+    string getPrefix()
+    {
+        switch (ModeId)
+        {
+            case GameModes.Simple: return "Standard";
+            case GameModes.TimeFight: return "Time";
+            case GameModes.Perfect: return "Perfect";
+            default: return "Standard";
+        }
+    }
     public void ReturnToMenu()
     {
         Destroy(GameObject.Find("GameDataObject"));
