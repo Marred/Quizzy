@@ -159,7 +159,7 @@ public class GameController : MonoBehaviour
     {
         RemovedIncorrect = false;
         //RemoveIncorrectButton.SetActive(true);
-        QuestionNumText.text = "Pytanie: " + CurrentQuestionNumber + "/" + QuestionList.Count;
+        QuestionNumText.text = "Pytanie: " + (CurrentQuestionNumber+1) + "/" + QuestionList.Count;
         QuestionText.GetComponent<Text>().text = q.QuestionText;
         Answer[] shuffledAnswers = Question.shuffleAnswers(q);
         CorrectAnswerId = (byte)Array.IndexOf(shuffledAnswers, q.Answers[0]);
@@ -254,13 +254,18 @@ public class GameController : MonoBehaviour
             TeacherEndGameHighScoreText.text = EndGameMessage;
             TeacherEndGameHighScore.SetActive(true);
         }
-        else
+        else if( Score * 100 / CurrentQuestionNumber > 40 )
         {
             String EndGameMessage = "Gratulacje! Zdałeś! \n Twój wynik to " + Score + "/" + CurrentQuestionNumber;
             TeacherEndGameText.text = EndGameMessage;
             TeacherEndGameObject.SetActive(true);
         }
-        
+        else
+        {
+            String EndGameMessage = "Niestety oblałeś! \n Twój wynik to " + Score + "/" + CurrentQuestionNumber;
+            TeacherEndGameText.text = EndGameMessage;
+            TeacherEndGameObject.SetActive(true);
+        }
     }
 
     public void saveRecord()

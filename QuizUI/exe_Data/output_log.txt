@@ -17,10 +17,57 @@ Platform assembly: C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\Unit
 Loading C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
 Loading C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
-- Completed reload, in  0.203 seconds
+- Completed reload, in  0.283 seconds
 Platform assembly: C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\kaje11\Documents\quizzy\QuizUI\exe_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 9.325045 ms
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 11.166913 ms
+
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 502.
+Total: 1.028236 ms (FindLiveObjects: 0.094239 ms CreateObjectMapping: 0.044320 ms MarkObjects: 0.779575 ms  DeleteObjects: 0.107768 ms)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.837425 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 812.
+Total: 0.842557 ms (FindLiveObjects: 0.089574 ms CreateObjectMapping: 0.032190 ms MarkObjects: 0.683003 ms  DeleteObjects: 0.035922 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.394931 ms
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 502.
+Total: 1.187790 ms (FindLiveObjects: 0.310243 ms CreateObjectMapping: 0.171683 ms MarkObjects: 0.654544 ms  DeleteObjects: 0.048985 ms)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.141137 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 812.
+Total: 0.928398 ms (FindLiveObjects: 0.062515 ms CreateObjectMapping: 0.039188 ms MarkObjects: 0.791705 ms  DeleteObjects: 0.034056 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.657588 ms
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 502.
+Total: 0.721725 ms (FindLiveObjects: 0.070912 ms CreateObjectMapping: 0.040121 ms MarkObjects: 0.558905 ms  DeleteObjects: 0.050852 ms)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.221847 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 812.
+Total: 1.362273 ms (FindLiveObjects: 0.104969 ms CreateObjectMapping: 0.049452 ms MarkObjects: 1.160265 ms  DeleteObjects: 0.047119 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.338947 ms
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 502.
+Total: 0.647546 ms (FindLiveObjects: 0.064381 ms CreateObjectMapping: 0.031257 ms MarkObjects: 0.502455 ms  DeleteObjects: 0.048985 ms)
+
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 26a8 -> priority: 1 
+  Thread -> id: 1af8 -> priority: 1 
